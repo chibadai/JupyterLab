@@ -1,0 +1,309 @@
+{
+    "2": {
+        "attr": {
+            "id": "start",
+            "class": "node"
+        },
+        "children": {
+            "1": {
+                "type": "rect",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "height": 36.0,
+                    "width": 53.99999999999999,
+                    "x": 20.71,
+                    "y": 4.0
+                },
+                "text": ""
+            },
+            "2": {
+                "type": "text",
+                "attr": {
+                    "text-anchor": "middle",
+                    "x": 47.71,
+                    "y": 26.19999999999999,
+                    "font-family": "Times,serif",
+                    "font-size": "14.00"
+                },
+                "text": "start"
+            }
+        }
+    },
+    "3": {
+        "attr": {
+            "id": "input",
+            "class": "node"
+        },
+        "children": {
+            "1": {
+                "type": "rect",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "height": 36.0,
+                    "width": 53.99999999999999,
+                    "x": 20.71,
+                    "y": 77.0
+                },
+                "text": ""
+            },
+            "2": {
+                "type": "text",
+                "attr": {
+                    "text-anchor": "middle",
+                    "x": 47.71,
+                    "y": 99.19999999999999,
+                    "font-family": "Times,serif",
+                    "font-size": "14.00"
+                },
+                "text": "input"
+            }
+        }
+    },
+    "4": {
+        "attr": {
+            "id": "start-input",
+            "class": "edge"
+        },
+        "children": {
+            "1": {
+                "type": "path",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "d": "M47.71,40.19 47.71,66.93"
+                },
+                "text": ""
+            },
+            "2": {
+                "type": "polygon",
+                "attr": {
+                    "fill": "black",
+                    "stroke": "black",
+                    "points": "47.21,-205.03 43.71,-195.03 40.21,-205.03 47.21,-205.03"
+                },
+                "text": ""
+            }
+        }
+    },
+    "5": {
+        "attr": {
+            "id": "end",
+            "class": "node"
+        },
+        "children": {
+            "1": {
+                "type": "rect",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "height": 36.0,
+                    "width": 54.000000000000014,
+                    "x": 85.71,
+                    "y": 236.0
+                },
+                "text": ""
+            },
+            "2": {
+                "type": "text",
+                "attr": {
+                    "text-anchor": "middle",
+                    "x": 112.71,
+                    "y": 258.2,
+                    "font-family": "Times,serif",
+                    "font-size": "14.00"
+                },
+                "text": "end"
+            }
+        }
+    },
+    "6": {
+        "attr": {
+            "id": "if_valid",
+            "class": "node"
+        },
+        "children": {
+            "1": {
+                "type": "rect",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "height": 36.0,
+                    "width": 59.09,
+                    "x": 64.17,
+                    "y": 150.0
+                },
+                "text": ""
+            },
+            "2": {
+                "type": "text",
+                "attr": {
+                    "text-anchor": "middle",
+                    "x": 93.71,
+                    "y": 172.2,
+                    "font-family": "Times,serif",
+                    "font-size": "14.00"
+                },
+                "text": "if_valid"
+            }
+        }
+    },
+    "7": {
+        "attr": {
+            "id": "if_valid-end",
+            "class": "edge"
+        },
+        "children": {
+            "1": {
+                "type": "path",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "d": "M97.65,186.4 106.62,226.07"
+                },
+                "text": ""
+            },
+            "2": {
+                "type": "polygon",
+                "attr": {
+                    "fill": "black",
+                    "stroke": "black",
+                    "points": "106.05,-46.62 104.85,-36.1 99.23,-45.08 106.05,-46.62"
+                },
+                "text": ""
+            },
+            "3": {
+                "type": "text",
+                "attr": {
+                    "text-anchor": "middle",
+                    "x": 114.04,
+                    "y": 215.2,
+                    "font-family": "Times,serif",
+                    "font-size": "14.00"
+                },
+                "text": "yes"
+            }
+        }
+    },
+    "8": {
+        "attr": {
+            "id": "message",
+            "class": "node"
+        },
+        "children": {
+            "1": {
+                "type": "rect",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "height": 36.0,
+                    "width": 63.86,
+                    "x": 3.78,
+                    "y": 236.0
+                },
+                "text": ""
+            },
+            "2": {
+                "type": "text",
+                "attr": {
+                    "text-anchor": "middle",
+                    "x": 35.71,
+                    "y": 258.2,
+                    "font-family": "Times,serif",
+                    "font-size": "14.00"
+                },
+                "text": "message"
+            }
+        }
+    },
+    "9": {
+        "attr": {
+            "id": "if_valid-message",
+            "class": "edge"
+        },
+        "children": {
+            "1": {
+                "type": "path",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "d": "M81.7,186.4 53.25,227.6"
+                },
+                "text": ""
+            },
+            "2": {
+                "type": "polygon",
+                "attr": {
+                    "fill": "black",
+                    "stroke": "black",
+                    "points": "52.08,-42.34 43.52,-36.1 46.32,-46.31 52.08,-42.34"
+                },
+                "text": ""
+            },
+            "3": {
+                "type": "text",
+                "attr": {
+                    "text-anchor": "middle",
+                    "x": 75.71,
+                    "y": 215.2,
+                    "font-family": "Times,serif",
+                    "font-size": "14.00"
+                },
+                "text": "no"
+            }
+        }
+    },
+    "10": {
+        "attr": {
+            "id": "message-input",
+            "class": "edge"
+        },
+        "children": {
+            "1": {
+                "type": "path",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "d": "M37.02,235.92000000000002 45.63,123.22999999999999"
+                },
+                "text": ""
+            },
+            "2": {
+                "type": "polygon",
+                "attr": {
+                    "fill": "black",
+                    "stroke": "black",
+                    "points": "38.15,-149.2 42.41,-158.9 45.13,-148.66 38.15,-149.2"
+                },
+                "text": ""
+            }
+        }
+    },
+    "11": {
+        "attr": {
+            "id": "input-if_valid",
+            "class": "edge"
+        },
+        "children": {
+            "1": {
+                "type": "path",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "d": "M58.85,113.19 77.12,141.39"
+                },
+                "text": ""
+            },
+            "2": {
+                "type": "polygon",
+                "attr": {
+                    "fill": "black",
+                    "stroke": "black",
+                    "points": "76.18,-132.32 78.68,-122.03 70.31,-128.52 76.18,-132.32"
+                },
+                "text": ""
+            }
+        }
+    }
+}

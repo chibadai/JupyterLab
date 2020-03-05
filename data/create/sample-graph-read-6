@@ -1,0 +1,12 @@
+digraph {
+	start [id=start shape=rect]
+	end [id=end shape=rect]
+	if_valid [id=if_valid shape=diamond]
+	message [id=message shape=rect]
+	input [id=input shape=rect]
+	start -> input [id="start-input"]
+	input -> if_valid [id="input-if_valid"]
+	if_valid -> message [label=no id="if_valid-message"]
+	if_valid -> end [label=yes id="if_valid-end"]
+	message -> input [id="message-input"]
+}

@@ -1,0 +1,21 @@
+digraph untitled {
+rankdir=TD
+size="4,4"
+edge[fontsize="11" arrowhead=open]
+start[label=""]
+end[shape=doublecircle, label="", style=filled]
+action1[shape=rectangle, label="action"]
+action2[shape=rectangle, label="action"]
+action3[shape=rectangle, label="action"]
+if1[shape=rectangle, label="decision"]
+if2[shape=rectangle, label="decision"]
+start -> action1
+action1 -> if1
+if1 -> action2[label="condition
+yes" tailport=w]
+if1 -> action3[taillabel="condition
+no" labeldistance=2.5 tailport=e]
+action2 -> if2[headport=w]
+action3 -> if2[headport=e]
+if2 -> end[taillabel="condition"]
+}

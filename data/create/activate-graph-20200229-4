@@ -1,0 +1,25 @@
+digraph root {
+	start [id=start shape=Mdiamond]
+	end [id=end shape=Mdiamond]
+	start -> a0
+	start -> b0
+	a1 -> b3
+	b2 -> a3
+	a3 -> end
+	b3 -> end
+	a3 -> a0
+	subgraph cluster_0 {
+		node [color=white style=filled]
+		a0 -> a1
+		a1 -> a2
+		a2 -> a3
+		color=lightgrey label="process #1" style=filled
+	}
+	subgraph cluster_1 {
+		node [style=filled]
+		b0 -> b1
+		b1 -> b2
+		b2 -> b3
+		color=blue label="process #2"
+	}
+}

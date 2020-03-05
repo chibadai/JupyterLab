@@ -1,0 +1,14 @@
+graph cluster_0 {
+	a0 -- eggs
+	subgraph child {
+		node [shape=box]
+		foo -- bar
+		subgraph cluster_1 {
+			test1 -- test2
+			a3
+			a3 -- test1
+		}
+	}
+	a1
+	a2
+}

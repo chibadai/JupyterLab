@@ -1,0 +1,35 @@
+digraph root {
+	subgraph cluster_0 {
+		node [color=white shape=rect style=filled]
+		subgraph cluster_2 {
+			node [color=yellow shape=rect style=filled]
+			c0
+			c1
+			c2
+			c3
+			label="process #3" shape=rect style=filled
+		}
+		a0
+		a1
+		a2
+		a3
+		color=lightgrey label="process #1" shape=rect style=filled
+	}
+	subgraph cluster_1 {
+		node [shape=rect style=filled]
+		b0
+		b1
+		b2
+		b3
+		color=blue label="process #2" shape=rect
+	}
+	start [id=start shape=Mdiamond]
+	end [id=end shape=Mdiamond]
+	start -> a0 [shape=rect]
+	start -> b0 [shape=rect]
+	a1 -> b3 [shape=rect]
+	b2 -> a3 [shape=rect]
+	a3 -> end [shape=rect]
+	b3 -> end [shape=rect]
+	a3 -> a0 [shape=rect]
+}

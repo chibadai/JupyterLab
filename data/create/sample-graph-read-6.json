@@ -1,0 +1,264 @@
+{
+    "2": {
+        "attr": {
+            "id": "start",
+            "class": "node"
+        },
+        "children": {
+            "1": {
+                "type": "rect",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "height": 36.0,
+                    "width": 53.99999999999999,
+                    "x": 18.71,
+                    "y": 4.0
+                },
+                "text": ""
+            },
+            "2": {
+                "type": "text",
+                "attr": {
+                    "text-anchor": "middle",
+                    "x": 45.71,
+                    "y": 26.19999999999999,
+                    "font-family": "Times,serif",
+                    "font-size": "14.00"
+                },
+                "text": "start"
+            }
+        }
+    },
+    "3": {
+        "attr": {
+            "id": "input",
+            "class": "node"
+        },
+        "children": {
+            "1": {
+                "type": "rect",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "height": 36.0,
+                    "width": 53.99999999999999,
+                    "x": 18.71,
+                    "y": 77.0
+                },
+                "text": ""
+            },
+            "2": {
+                "type": "text",
+                "attr": {
+                    "text-anchor": "middle",
+                    "x": 45.71,
+                    "y": 99.19999999999999,
+                    "font-family": "Times,serif",
+                    "font-size": "14.00"
+                },
+                "text": "input"
+            }
+        }
+    },
+    "4": {
+        "attr": {
+            "id": "start-input",
+            "class": "edge"
+        },
+        "children": {
+            "1": {
+                "type": "path",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "d": "M45.71,40.19 45.71,66.93"
+                },
+                "text": ""
+            }
+        }
+    },
+    "5": {
+        "attr": {
+            "id": "end",
+            "class": "node"
+        },
+        "children": {
+            "1": {
+                "type": "rect",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "height": 36.0,
+                    "width": 54.000000000000014,
+                    "x": 87.71,
+                    "y": 236.0
+                },
+                "text": ""
+            },
+            "2": {
+                "type": "text",
+                "attr": {
+                    "text-anchor": "middle",
+                    "x": 114.71,
+                    "y": 258.2,
+                    "font-family": "Times,serif",
+                    "font-size": "14.00"
+                },
+                "text": "end"
+            }
+        }
+    },
+    "6": {
+        "attr": {
+            "id": "if_valid",
+            "class": "node"
+        },
+        "children": {
+            "1": {
+                "type": "rect",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "height": 36.0,
+                    "width": 106.77,
+                    "x": 61.33,
+                    "y": 150.0
+                },
+                "text": ""
+            },
+            "2": {
+                "type": "text",
+                "attr": {
+                    "text-anchor": "middle",
+                    "x": 114.71,
+                    "y": 172.2,
+                    "font-family": "Times,serif",
+                    "font-size": "14.00"
+                },
+                "text": "if_valid"
+            }
+        }
+    },
+    "7": {
+        "attr": {
+            "id": "if_valid-end",
+            "class": "edge"
+        },
+        "children": {
+            "1": {
+                "type": "path",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "d": "M114.71,186.4 114.71,225.68"
+                },
+                "text": ""
+            },
+            "3": {
+                "type": "text",
+                "attr": {
+                    "text-anchor": "middle",
+                    "x": 124.04,
+                    "y": 215.2,
+                    "font-family": "Times,serif",
+                    "font-size": "14.00"
+                },
+                "text": "yes"
+            }
+        }
+    },
+    "8": {
+        "attr": {
+            "id": "message",
+            "class": "node"
+        },
+        "children": {
+            "1": {
+                "type": "rect",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "height": 36.0,
+                    "width": 63.86,
+                    "x": 3.78,
+                    "y": 236.0
+                },
+                "text": ""
+            },
+            "2": {
+                "type": "text",
+                "attr": {
+                    "text-anchor": "middle",
+                    "x": 35.71,
+                    "y": 258.2,
+                    "font-family": "Times,serif",
+                    "font-size": "14.00"
+                },
+                "text": "message"
+            }
+        }
+    },
+    "9": {
+        "attr": {
+            "id": "if_valid-message",
+            "class": "edge"
+        },
+        "children": {
+            "1": {
+                "type": "path",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "d": "M102.37,182.12 58.87,228.37"
+                },
+                "text": ""
+            },
+            "3": {
+                "type": "text",
+                "attr": {
+                    "text-anchor": "middle",
+                    "x": 87.71,
+                    "y": 215.2,
+                    "font-family": "Times,serif",
+                    "font-size": "14.00"
+                },
+                "text": "no"
+            }
+        }
+    },
+    "10": {
+        "attr": {
+            "id": "message-input",
+            "class": "edge"
+        },
+        "children": {
+            "1": {
+                "type": "path",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "d": "M36.8,235.92000000000002 43.98,123.22999999999999"
+                },
+                "text": ""
+            }
+        }
+    },
+    "11": {
+        "attr": {
+            "id": "input-if_valid",
+            "class": "edge"
+        },
+        "children": {
+            "1": {
+                "type": "path",
+                "attr": {
+                    "fill": "none",
+                    "stroke": "black",
+                    "d": "M62.42,113.19 94.81,146.51999999999998"
+                },
+                "text": ""
+            }
+        }
+    }
+}
