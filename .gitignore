@@ -5,3 +5,4 @@ data/.ipynb_checkpoints
 data/create/.ipynb_checkpoints
 
 notebooks/__pycache__
+notebooks/own/__pycache__
