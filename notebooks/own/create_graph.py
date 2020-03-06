@@ -148,10 +148,10 @@ class create_source_to_graph(object):
         dot='.'
         file_path='./'
         file_name='activate-20200305-1'
-        graph_type_str='Digraph'
-        graph_type='Digraph'
-        engine='dot'
-        file_extension='svg'
+        # graph_type_str='Digraph'
+        # graph_type='Digraph'
+        # engine='dot'
+        # file_extension='svg'
         
         # graph_source_list = []
 
@@ -215,25 +215,25 @@ class create_source_to_graph(object):
         self.graph_source_list[-1] = self.graph_source_list[-1][:-1]
         self.graph_source_list.append(after_brackets)
 
-        self.indent_max = max([x[0] for x in self.recreate_result_source_lines])
+        # self.indent_max = max([x[0] for x in self.recreate_result_source_lines])
         
-        edges = []
-        for idx in range(0, self.indent_max):
-            self.sequense_create_edges(idx, self.recreate_result_source_lines, create_edges=edges)
+        # edges = []
+        # for idx in range(0, self.indent_max):
+        #     self.sequense_create_edges(idx, self.recreate_result_source_lines, create_edges=edges)
 
-        self.change_create_edges(self.recreate_result_source_lines, create_edges=edges)
+        # self.change_create_edges(self.recreate_result_source_lines, create_edges=edges)
 
-        json_data = json.loads(''.join(self.graph_source_list))
+        # json_data = json.loads(''.join(self.graph_source_list))
 
-        self.graph = getattr(graphviz, graph_type_str)(
-            name='root',
-            format=file_extension,
-            engine=engine
-        )
-        self.print_subgraph(self.graph, json_data)
+        # self.graph = getattr(graphviz, graph_type_str)(
+        #     name='root',
+        #     format=file_extension,
+        #     engine=engine
+        # )
+        # self.print_subgraph(self.graph, json_data)
 
 
-        self.graph.edges(edges)
+        # self.graph.edges(edges)
 
         # graph
 
@@ -265,3 +265,28 @@ class create_source_to_graph(object):
         self.graph_source_list = []
         self.indent_max = None
         self.main()
+
+        self.graph_type_str='Digraph'
+        self.graph_type='Digraph'
+        self.engine='dot'
+        self.file_extension='svg'
+
+        self.indent_max = max([x[0] for x in self.recreate_result_source_lines])
+        
+        self.edges = []
+        for idx in range(0, self.indent_max):
+            self.sequense_create_edges(idx, self.recreate_result_source_lines, create_edges=self.edges)
+
+        self.change_create_edges(self.recreate_result_source_lines, create_edges=self.edges)
+
+        self.json_data = json.loads(''.join(self.graph_source_list))
+
+        self.graph = getattr(graphviz, self.graph_type_str)(
+            name='root',
+            format=self.file_extension,
+            engine=self.engine
+        )
+        self.print_subgraph(self.graph, self.json_data)
+
+
+        self.graph.edges(self.edges)
