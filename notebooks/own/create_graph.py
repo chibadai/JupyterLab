@@ -86,12 +86,12 @@ class create_source_to_graph(object):
         commentout_flg = 0
         def_line = 0
         total_indent_num = None
-        replace_line_indent = '    '
-        colon = ':'
+        # replace_line_indent = '    '
+        # colon = ':'
         before_indent_num = 0
-        result_source_lines = []
-        before_parentheses = '('
-        after_parentheses = ')'
+        # result_source_lines = []
+        # before_parentheses = '('
+        # after_parentheses = ')'
 
         for idx in range(0, len(sources)):
             line = sources[idx].replace('\n', '')
@@ -108,7 +108,7 @@ class create_source_to_graph(object):
                     total_indent_num = self.get_indent(line)
 
                 indent_num = self.get_indent(line)
-                output_line = line[len(replace_line_indent*total_indent_num):]
+                output_line = line[len(self.replace_line_indent*total_indent_num):]
                 colon_flg = self.get_collon(output_line)
                 msg = ''
                 indent_before_after_num = None
@@ -118,11 +118,11 @@ class create_source_to_graph(object):
                     indent_before_after_num = 1
                 elif indent_num < before_indent_num:
                     indent_before_after_num = -1
-                split_before_line = output_line.split(before_parentheses)
+                split_before_line = output_line.split(self.before_parentheses)
                 len_split_before_line = len(split_before_line) - 1
-                split_after_line = output_line.split(after_parentheses)
+                split_after_line = output_line.split(self.after_parentheses)
                 len_split_after_line = len(split_after_line) - 1
-                result_source_lines.append([indent_num, colon_flg, indent_before_after_num, len_split_before_line, len_split_after_line, output_line])
+                self.result_source_lines.append([indent_num, colon_flg, indent_before_after_num, len_split_before_line, len_split_after_line, output_line])
                 before_indent_num = indent_num
                 
                 
@@ -135,12 +135,12 @@ class create_source_to_graph(object):
         start_num = None
         source_idx = 0
         pop_counter = 0
-        len_result_source_lines = len(result_source_lines)
+        len_result_source_lines = len(self.result_source_lines)
         try:
             for idx in range(0, len_result_source_lines):
                 if idx + pop_counter + 1 >= len_result_source_lines:
                     break
-                [indent_num, colon_flg, indent_before_after_num, len_split_before_line, len_split_after_line, output_line] = result_source_lines[idx + pop_counter]
+                [indent_num, colon_flg, indent_before_after_num, len_split_before_line, len_split_after_line, output_line] = self.result_source_lines[idx + pop_counter]
                 if start_num is None:
                     start_num = indent_num
                 indent_num = indent_num - start_num
@@ -149,10 +149,10 @@ class create_source_to_graph(object):
                 else:
                     recreate_result_source_lines.append([indent_num, colon_flg, indent_before_after_num, output_line])
                     before_after_parentheses_sum = len_split_before_line
-                    for line_idx in range(idx + 1, len(result_source_lines)):
-                        [t_indent_num, t_colon_flg, t_indent_before_after_num, t_len_split_before_line, t_len_split_after_line, t_output_line] = result_source_lines[line_idx]
-                        recreate_result_source_lines[-1][-1] += t_output_line.replace(replace_line_indent, '')
-                        result_source_lines.pop(line_idx)
+                    for line_idx in range(idx + 1, len(self.result_source_lines)):
+                        [t_indent_num, t_colon_flg, t_indent_before_after_num, t_len_split_before_line, t_len_split_after_line, t_output_line] = self.result_source_lines[line_idx]
+                        recreate_result_source_lines[-1][-1] += t_output_line.replace(self.replace_line_indent, '')
+                        self.result_source_lines.pop(line_idx)
                         pop_counter += 1
                         before_after_parentheses_sum += t_len_split_before_line
                         if before_after_parentheses_sum >= t_len_split_after_line:
@@ -177,38 +177,38 @@ class create_source_to_graph(object):
         after_brackets = '}'
         subgraph_counter = 0
         before_indent_num = None
-        colon = ':'
+        # colon = ':'
         commna = ','
         double_quotation ='"'
         before_node_name = None
 
-        graph_source_list.append(before_brackets + double_quotation + 'g' + double_quotation + colon + before_brackets)
+        graph_source_list.append(before_brackets + double_quotation + 'g' + double_quotation + self.colon + before_brackets)
         subgraph_counter += 1
 
         for idx in range(0, len(recreate_result_source_lines)):
             add_str = ''
-            node_name = double_quotation + self.n_str + str(idx).zfill(self.zfill_str) + double_quotation + colon
+            node_name = double_quotation + self.n_str + str(idx).zfill(self.zfill_str) + double_quotation + self.colon
             [indent_num, colon_flg, indent_before_after_num, line] = recreate_result_source_lines[idx]
             line = line.replace('    ', '').replace('"', '\'')
             if len(line) == 0:
                 continue
             if before_indent_num is None or before_indent_num == indent_num:
-                graph_source_list.append('\t'*subgraph_counter + node_name + space_str + before_brackets + double_quotation + 'label' + double_quotation + colon + double_quotation + line + double_quotation + after_brackets + commna)
+                graph_source_list.append('\t'*subgraph_counter + node_name + space_str + before_brackets + double_quotation + 'label' + double_quotation + self.colon + double_quotation + line + double_quotation + after_brackets + commna)
                 
             elif before_indent_num < indent_num:
                 change_indent_num = indent_num - before_indent_num
-                add_str = double_quotation + 'subgraph' + self.n_str + str(idx).zfill(self.zfill_str) + double_quotation + colon + space_str + before_brackets
+                add_str = double_quotation + 'subgraph' + self.n_str + str(idx).zfill(self.zfill_str) + double_quotation + self.colon + space_str + before_brackets
                 for change_indent_num_idx in range(0, change_indent_num):
                     graph_source_list.append('\t'*subgraph_counter + add_str)
                     subgraph_counter += 1
-                graph_source_list.append('\t'*subgraph_counter + node_name + space_str + before_brackets + double_quotation + 'label' + double_quotation + colon + double_quotation + line + double_quotation + after_brackets + commna)
+                graph_source_list.append('\t'*subgraph_counter + node_name + space_str + before_brackets + double_quotation + 'label' + double_quotation + self.colon + double_quotation + line + double_quotation + after_brackets + commna)
             elif before_indent_num > indent_num:
                 change_indent_num = before_indent_num - indent_num
                 add_str = after_brackets + commna
                 for change_indent_num_idx in range(0, change_indent_num):
                     subgraph_counter -= 1
                     graph_source_list.append('\t'*subgraph_counter + add_str)
-                graph_source_list.append('\t'*subgraph_counter + node_name + space_str + before_brackets + double_quotation + 'label' + double_quotation + colon + double_quotation + line + double_quotation + after_brackets + commna)
+                graph_source_list.append('\t'*subgraph_counter + node_name + space_str + before_brackets + double_quotation + 'label' + double_quotation + self.colon + double_quotation + line + double_quotation + after_brackets + commna)
             
             if before_node_name is not None:
                 pass
@@ -264,6 +264,11 @@ class create_source_to_graph(object):
         self.graph = None
         self.zfill_str = 2
         self.n_str = 'n'
+        self.replace_line_indent = '    '
+        self.colon = ':'
+        self.result_source_lines = []
+        self.before_parentheses = '('
+        self.after_parentheses = ')'
         self.module = importlib.import_module(self.import_module_name)
         self.source_lines = None
         if self.module_function_name is None:
