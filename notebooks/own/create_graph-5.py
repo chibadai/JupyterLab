@@ -41,8 +41,6 @@ class create_source_to_graph(object):
             [indent_num, colon_flg, indent_before_after_num, line] = target_source_lines[idx]
             if len(line) == 0:
                 continue
-            # print(indent_num, colon_flg, indent_before_after_num, line)
-            # print(indent_num, colon_flg, indent_before_after_num, before_indent_num, indent_num)
             if before_indent_num is not None and before_indent_num != indent_num:
                 create_edges.append((before_node_name, node_name))
 
@@ -68,42 +66,24 @@ class create_source_to_graph(object):
                         self.print_subgraph(parent_graph, target_json[key], cnt=cnt+1, start_node=before_node)
             else:
                 # node
-                print(tab*cnt, key, '\t', target_json[key])
                 parent_graph.node(key, target_json[key]['label'])
             return_key = None
         return before_node
 
-    def main(self):
-        import importlib, inspect, graphviz, json
-        # module = importlib.import_module(self.import_module_name)
-        # source_lines = None
-        # if self.module_function_name is None:
-        #     source_lines = inspect.getsourcelines(module)
-        # else:
-        #     source_lines = inspect.getsourcelines(getattr(module, self.module_function_name))
-
-        sources = self.source_lines[0]
+    def get_source_lines(self):
         commentout_flg = 0
-        def_line = 0
         total_indent_num = None
-        # replace_line_indent = '    '
-        # colon = ':'
         before_indent_num = 0
-        # result_source_lines = []
-        # before_parentheses = '('
-        # after_parentheses = ')'
 
-        for idx in range(0, len(sources)):
-            line = sources[idx].replace('\n', '')
-            # if line.find('@') > -1 or line.find('def') > -1:
-            #     def_line = 1
+        for idx in range(0, len(self.sources)):
+            line = self.sources[idx].replace('\n', '')
             if line.find('"""') > -1:
                 if commentout_flg == 0:
                     commentout_flg = 1
                 elif commentout_flg == 1:
                     commentout_flg = -1
 
-            if def_line == 0 and commentout_flg == 0:
+            if commentout_flg == 0:
                 if total_indent_num is None:
                     total_indent_num = self.get_indent(line)
 
@@ -126,9 +106,12 @@ class create_source_to_graph(object):
                 before_indent_num = indent_num
                 
                 
-            def_line = 0
             if commentout_flg == -1:
                 commentout_flg = 0
+
+
+    def main(self):
+        import importlib, inspect, graphviz, json
 
         recreate_result_source_lines = []
         z_fill_num = 2
@@ -275,4 +258,6 @@ class create_source_to_graph(object):
             self.source_lines = inspect.getsourcelines(module)
         else:
             self.source_lines = inspect.getsourcelines(getattr(self.module, self.module_function_name))
+        self.sources = self.source_lines[0]
+        self.get_source_lines()
         self.main()
