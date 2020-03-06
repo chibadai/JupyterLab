@@ -18,7 +18,6 @@ class create_source_to_graph(object):
         for idx in range(0, len(target_source_lines)):
             node_name = self.n_str + str(idx).zfill(self.zfill_str)
             [indent_num, colon_flg, indent_before_after_num, line] = target_source_lines[idx]
-            # line = line.replace('    ', '').replace('"', '\'')
             if len(line) == 0 or \
                 (target_indent_num == 0 and indent_num > 0):
                 continue
@@ -55,7 +54,7 @@ class create_source_to_graph(object):
             if start_node is not None and add_node_flg == 0:
                 add_node_flg = 1
                 parent_graph.edge(start_node, key)
-            if key.find('subgraph') > -1 or cnt == 0:
+            if key.find(self.subgraph_name) > -1 or cnt == 0:
                 if cnt == 0:
                     # subgraph
                     return_key = self.print_subgraph(parent_graph, target_json[key], cnt=cnt+1, start_node=before_node)
@@ -66,7 +65,7 @@ class create_source_to_graph(object):
                         self.print_subgraph(parent_graph, target_json[key], cnt=cnt+1, start_node=before_node)
             else:
                 # node
-                parent_graph.node(key, target_json[key]['label'])
+                parent_graph.node(key, target_json[key][self.label_name])
             return_key = None
         return before_node
 
@@ -76,7 +75,7 @@ class create_source_to_graph(object):
         before_indent_num = 0
 
         for idx in range(0, len(self.sources)):
-            line = self.sources[idx].replace('\n', '')
+            line = self.sources[idx].replace('\n', self.blanck_str)
             if line.find('"""') > -1:
                 if commentout_flg == 0:
                     commentout_flg = 1
@@ -90,7 +89,7 @@ class create_source_to_graph(object):
                 indent_num = self.get_indent(line)
                 output_line = line[len(self.replace_line_indent*total_indent_num):]
                 colon_flg = self.get_collon(output_line)
-                msg = ''
+                msg = self.blanck_str
                 indent_before_after_num = None
                 if indent_num == before_indent_num:
                     indent_before_after_num = 0
@@ -109,12 +108,7 @@ class create_source_to_graph(object):
             if commentout_flg == -1:
                 commentout_flg = 0
 
-
-    def main(self):
-        import graphviz, json
-
-        # recreate_result_source_lines = []
-        z_fill_num = 2
+    def edit_source_lines(self):
         start_num = None
         source_idx = 0
         pop_counter = 0
@@ -134,7 +128,7 @@ class create_source_to_graph(object):
                     before_after_parentheses_sum = len_split_before_line
                     for line_idx in range(idx + 1, len(self.result_source_lines)):
                         [t_indent_num, t_colon_flg, t_indent_before_after_num, t_len_split_before_line, t_len_split_after_line, t_output_line] = self.result_source_lines[line_idx]
-                        self.recreate_result_source_lines[-1][-1] += t_output_line.replace(self.replace_line_indent, '')
+                        self.recreate_result_source_lines[-1][-1] += t_output_line.replace(self.replace_line_indent, self.blanck_str)
                         self.result_source_lines.pop(line_idx)
                         pop_counter += 1
                         before_after_parentheses_sum += t_len_split_before_line
@@ -144,54 +138,38 @@ class create_source_to_graph(object):
         except:
             pass
 
-        svg_extension='svg'
-        dot='.'
-        file_path='./'
-        file_name='activate-20200305-1'
-        # graph_type_str='Digraph'
-        # graph_type='Digraph'
-        # engine='dot'
-        # file_extension='svg'
-        
-        # graph_source_list = []
-
-        space_str = ' '
-        before_brackets = '{'
-        after_brackets = '}'
+    def make_source_lines_to_dot_language(self):
         subgraph_counter = 0
         before_indent_num = None
-        # colon = ':'
-        commna = ','
-        double_quotation ='"'
         before_node_name = None
 
-        self.graph_source_list.append(before_brackets + double_quotation + 'g' + double_quotation + self.colon + before_brackets)
+        self.graph_source_list.append(self.before_brackets + self.double_quotation + 'g' + self.double_quotation + self.colon + self.before_brackets)
         subgraph_counter += 1
 
         for idx in range(0, len(self.recreate_result_source_lines)):
-            add_str = ''
-            node_name = double_quotation + self.n_str + str(idx).zfill(self.zfill_str) + double_quotation + self.colon
+            add_str = self.blanck_str
+            node_name = self.double_quotation + self.n_str + str(idx).zfill(self.zfill_str) + self.double_quotation + self.colon
             [indent_num, colon_flg, indent_before_after_num, line] = self.recreate_result_source_lines[idx]
-            line = line.replace('    ', '').replace('"', '\'')
+            line = line.replace(self.replace_line_indent , self.blanck_str).replace(self.double_quotation, self.single_quotation)
             if len(line) == 0:
                 continue
             if before_indent_num is None or before_indent_num == indent_num:
-                self.graph_source_list.append('\t'*subgraph_counter + node_name + space_str + before_brackets + double_quotation + 'label' + double_quotation + self.colon + double_quotation + line + double_quotation + after_brackets + commna)
+                self.graph_source_list.append(self.tab*subgraph_counter + node_name + self.space_str + self.before_brackets + self.double_quotation + self.label_name + self.double_quotation + self.colon + self.double_quotation + line + self.double_quotation + self.after_brackets + self.commna)
                 
             elif before_indent_num < indent_num:
                 change_indent_num = indent_num - before_indent_num
-                add_str = double_quotation + 'subgraph' + self.n_str + str(idx).zfill(self.zfill_str) + double_quotation + self.colon + space_str + before_brackets
+                add_str = self.double_quotation + self.subgraph_name + self.n_str + str(idx).zfill(self.zfill_str) + self.double_quotation + self.colon + self.space_str + self.before_brackets
                 for change_indent_num_idx in range(0, change_indent_num):
-                    self.graph_source_list.append('\t'*subgraph_counter + add_str)
+                    self.graph_source_list.append(self.tab*subgraph_counter + add_str)
                     subgraph_counter += 1
-                self.graph_source_list.append('\t'*subgraph_counter + node_name + space_str + before_brackets + double_quotation + 'label' + double_quotation + self.colon + double_quotation + line + double_quotation + after_brackets + commna)
+                self.graph_source_list.append(self.tab*subgraph_counter + node_name + self.space_str + self.before_brackets + self.double_quotation + self.label_name + self.double_quotation + self.colon + self.double_quotation + line + self.double_quotation + self.after_brackets + self.commna)
             elif before_indent_num > indent_num:
                 change_indent_num = before_indent_num - indent_num
-                add_str = after_brackets + commna
+                add_str = self.after_brackets + self.commna
                 for change_indent_num_idx in range(0, change_indent_num):
                     subgraph_counter -= 1
-                    self.graph_source_list.append('\t'*subgraph_counter + add_str)
-                self.graph_source_list.append('\t'*subgraph_counter + node_name + space_str + before_brackets + double_quotation + 'label' + double_quotation + self.colon + double_quotation + line + double_quotation + after_brackets + commna)
+                    self.graph_source_list.append(self.tab*subgraph_counter + add_str)
+                self.graph_source_list.append(self.tab*subgraph_counter + node_name + self.space_str + self.before_brackets + self.double_quotation + self.label_name + self.double_quotation + self.colon + self.double_quotation + line + self.double_quotation + self.after_brackets + self.commna)
             
             if before_node_name is not None:
                 pass
@@ -199,51 +177,44 @@ class create_source_to_graph(object):
             before_node_name = node_name
 
         if subgraph_counter > 0:
-            add_str = after_brackets
+            add_str = self.after_brackets
             for subgraph_counter_idx in range(0, subgraph_counter):
                 subgraph_counter -= 1
-                self.graph_source_list.append('\t'*subgraph_counter + add_str + commna)
+                self.graph_source_list.append(self.tab*subgraph_counter + add_str + self.commna)
 
         before_indent_num = None
         for idx in range(0, len(self.graph_source_list)):
             line = self.graph_source_list[idx]
-            indent_num = self.get_indent(line, replace_line_indent='\t')
+            indent_num = self.get_indent(line, replace_line_indent=self.tab)
             if before_indent_num is not None:
                 if before_indent_num -1 == indent_num:
                     self.graph_source_list[idx -1] = self.graph_source_list[idx -1][:-1]
             before_indent_num = indent_num
         self.graph_source_list[-1] = self.graph_source_list[-1][:-1]
-        self.graph_source_list.append(after_brackets)
-
-        # self.indent_max = max([x[0] for x in self.recreate_result_source_lines])
-        
-        # edges = []
-        # for idx in range(0, self.indent_max):
-        #     self.sequense_create_edges(idx, self.recreate_result_source_lines, create_edges=edges)
-
-        # self.change_create_edges(self.recreate_result_source_lines, create_edges=edges)
-
-        # json_data = json.loads(''.join(self.graph_source_list))
-
-        # self.graph = getattr(graphviz, graph_type_str)(
-        #     name='root',
-        #     format=file_extension,
-        #     engine=engine
-        # )
-        # self.print_subgraph(self.graph, json_data)
-
-
-        # self.graph.edges(edges)
-
-        # graph
+        self.graph_source_list.append(self.after_brackets)
 
     def __init__(
         self,
         import_module_name,
-        module_function_name=None):
+        module_function_name=None,
+        graph_type_str='Digraph',
+        engine='dot',
+        file_extension='svg',
+        file_path='./',
+        file_name='activate'):
         import importlib, inspect, graphviz, json
+        
+        self.graph_type_str = graph_type_str
+        self.graph_type =self.graph_type_str
+        self.engine = engine
+        self.file_extension = file_extension
+        self.svg_extension = self.file_extension
+        self.file_path = file_path
+        self.file_name = file_name
         self.import_module_name = import_module_name
         self.module_function_name = module_function_name
+
+        self.dot = '.'
         self.graph = None
         self.zfill_str = 2
         self.n_str = 'n'
@@ -252,6 +223,16 @@ class create_source_to_graph(object):
         self.result_source_lines = []
         self.before_parentheses = '('
         self.after_parentheses = ')'
+        self.space_str = ' '
+        self.before_brackets = '{'
+        self.after_brackets = '}'
+        self.commna = ','
+        self.double_quotation ='"'
+        self.tab = '\t'
+        self.subgraph_name = 'subgraph'
+        self.label_name = 'label'
+        self.blanck_str = ''
+        self.single_quotation = '\''
         self.module = importlib.import_module(self.import_module_name)
         self.source_lines = None
         if self.module_function_name is None:
@@ -264,12 +245,9 @@ class create_source_to_graph(object):
         self.recreate_result_source_lines = []
         self.graph_source_list = []
         self.indent_max = None
-        self.main()
-
-        self.graph_type_str='Digraph'
-        self.graph_type='Digraph'
-        self.engine='dot'
-        self.file_extension='svg'
+        
+        self.edit_source_lines()
+        self.make_source_lines_to_dot_language()
 
         self.indent_max = max([x[0] for x in self.recreate_result_source_lines])
         
@@ -279,7 +257,7 @@ class create_source_to_graph(object):
 
         self.change_create_edges(self.recreate_result_source_lines, create_edges=self.edges)
 
-        self.json_data = json.loads(''.join(self.graph_source_list))
+        self.json_data = json.loads(self.blanck_str.join(self.graph_source_list))
 
         self.graph = getattr(graphviz, self.graph_type_str)(
             name='root',
