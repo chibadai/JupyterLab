@@ -12,9 +12,10 @@ class create_source_to_graph(object):
     def get_collon(self, line, colon=':'):
         return (1 if len(line) > 0 and line[-1] == colon else 0)
 
-    def sequense_create_edges(self, target_indent_num, target_source_lines, create_edges=[]):
+    def sequense_create_edges(self, target_indent_num, target_source_lines, sequense_edges=[]):
         before_node_name = None
         before_indent_num = None
+        return_edges = []
         for idx in range(0, len(target_source_lines)):
             node_name = self.n_str + str(idx).zfill(self.zfill_str)
             [indent_num, colon_flg, indent_before_after_num, line] = target_source_lines[idx]
@@ -27,12 +28,14 @@ class create_source_to_graph(object):
 
 
             if before_node_name is not None and (target_indent_num == indent_num):
-                create_edges.append((before_node_name, node_name))
+                # sequense_edges.append((before_node_name, node_name))
+                return_edges.append((before_node_name, node_name))
             if target_indent_num == indent_num:
                 before_node_name = node_name
             before_indent_num = indent_num
+        sequense_edges.append(return_edges)
 
-    def change_create_edges(self, target_source_lines, create_edges=[]):
+    def change_create_edges(self, target_source_lines, change_edges=[]):
         before_node_name = None
         before_indent_num = None
         for idx in range(0, len(target_source_lines)):
@@ -41,7 +44,7 @@ class create_source_to_graph(object):
             if len(line) == 0:
                 continue
             if before_indent_num is not None and before_indent_num != indent_num:
-                create_edges.append((before_node_name, node_name))
+                change_edges.append((before_node_name, node_name))
 
             before_indent_num = indent_num
             before_node_name = node_name
@@ -53,7 +56,7 @@ class create_source_to_graph(object):
         for key in target_json:
             if start_node is not None and add_node_flg == 0:
                 add_node_flg = 1
-                parent_graph.edge(start_node, key)
+                # parent_graph.edge(start_node, key)
             if key.find(self.subgraph_name) > -1 or cnt == 0:
                 if cnt == 0:
                     # subgraph
@@ -233,6 +236,7 @@ class create_source_to_graph(object):
         self.label_name = 'label'
         self.blanck_str = ''
         self.single_quotation = '\''
+
         self.module = importlib.import_module(self.import_module_name)
         self.source_lines = None
         if self.module_function_name is None:
@@ -251,11 +255,13 @@ class create_source_to_graph(object):
 
         self.indent_max = max([x[0] for x in self.recreate_result_source_lines])
         
-        self.edges = []
+        self.sequense_edges = []
+        self.change_edges = []
         for idx in range(0, self.indent_max):
-            self.sequense_create_edges(idx, self.recreate_result_source_lines, create_edges=self.edges)
+            self.sequense_create_edges(idx, self.recreate_result_source_lines, sequense_edges=self.sequense_edges)
 
-        self.change_create_edges(self.recreate_result_source_lines, create_edges=self.edges)
+        self.change_create_edges(self.recreate_result_source_lines, change_edges=self.change_edges)
+        # self.create_edges(self.recreate_result_source_lines, indent_max=self.indent_max, edges=self.edges)
 
         self.json_data = json.loads(self.blanck_str.join(self.graph_source_list))
 
@@ -267,4 +273,14 @@ class create_source_to_graph(object):
         self.print_subgraph(self.graph, self.json_data)
 
 
-        self.graph.edges(self.edges)
+        # self.graph.edges(self.edges)
+        for edge_idx in range(0, len(self.sequense_edges)):
+            self.graph.edges(self.sequense_edges[edge_idx])
+        self.graph.edges(self.change_edges)
+
+    # def create_edges(self, source_lines, indent_max=0, edges=[]):
+    #     for idx in range(0, indent_max):
+    #         self.sequense_create_edges(idx, source_lines, create_edges=edges)
+
+    #     self.change_create_edges(source_lines, create_edges=edges)
+
